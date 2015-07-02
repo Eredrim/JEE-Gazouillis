@@ -10,10 +10,6 @@
         </session-timeout>
     </session-config>
     <servlet-mapping>
-        <servlet-name>recherche</servlet-name>
-        <url-pattern>/recherche</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>profil</servlet-name>
         <url-pattern>/profil</url-pattern>
     </servlet-mapping>
