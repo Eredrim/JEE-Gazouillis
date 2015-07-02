@@ -16,7 +16,7 @@
     <!--pour chaque message de tout le monde-->
     <form action="/partage" method="post">
         <fieldset>
-            <legend><a href="profilDeLaPersonne">Nom de la personne</a>, date</legend>
+            <legend><a href="/profilDeLaPersonne">Nom de la personne</a>, date</legend>
             Texte de la gazouille
         </fieldset>
         <input type="hidden" name="idGazouille" value=""/>
@@ -31,7 +31,7 @@
     <!--pour chaque message des personnes suivies -->
     <form action="/partage" method="post">
         <fieldset>
-            <legend><a href="profilDeLaPersonne">Nom de la personne</a>, date</legend>
+            <legend><a href="/profilDeLaPersonne">Nom de la personne</a>, date</legend>
             Texte de la gazouille
         </fieldset>
         <input type="hidden" name="idGazouille" value=""/>
