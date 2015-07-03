@@ -19,6 +19,7 @@ public class Person {
     private String mail;
 
     @Column(unique = true)
+    //TODO : ajouter un index sur le username
     private String username;
     private String password;
 
@@ -49,8 +50,8 @@ public class Person {
             inverseJoinColumns={@JoinColumn(name="id_MESSAGE")})
     private List<Message> messagesShared = new ArrayList<Message>();
 
-    public Person(Integer id, String firstName, String name, String mail, String username, String password) {
-        this.id = id;
+
+    public Person(String firstName, String name, String mail, String username, String password) {
         this.firstName = firstName;
         this.name = name;
         this.mail = mail;
