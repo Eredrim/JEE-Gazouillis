@@ -9,9 +9,6 @@ import utils.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by axel on 03/07/2015.
- */
 public class MessageDAO {
 
     public void insert(Message message) {

@@ -95,4 +95,21 @@ public class KeywordDAO {
         }
         return keyword;
     }
+
+    public Keyword findByWord(String word) {
+        Keyword keyword = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String queryString = "from Keyword where word = :word";
+            Query query = session.createQuery(queryString);
+            query.setString("word", word);
+            keyword = (Keyword) query.uniqueResult();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return keyword;
+    }
 }

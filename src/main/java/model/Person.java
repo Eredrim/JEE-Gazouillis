@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PERSON")
+@Table(name = "PERSON", indexes = {@Index(columnList = "username", name = "person_username_index")})
 public class Person {
 
     @Id
@@ -23,7 +23,7 @@ public class Person {
     private String password;
 
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL)
-    private ArrayList<Message> messages = new ArrayList<Message>();
+    private List<Message> messages = new ArrayList<Message>();
 
     /**
      * Correspond aux personnes qui nous suivent
@@ -109,7 +109,7 @@ public class Person {
         this.password = password;
     }
 
-    public ArrayList<Message> getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
 
