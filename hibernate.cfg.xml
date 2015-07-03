@@ -15,5 +15,9 @@
       <property name="connection.pool_size">1</property>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
+
+    <mapping class="model.Message"/>
+    <mapping class="model.Person"/>
+    <mapping class="model.Keyword"/>
   </session-factory>
 </hibernate-configuration>
