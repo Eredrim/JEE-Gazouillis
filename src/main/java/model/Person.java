@@ -19,7 +19,7 @@ public class Person {
     private String mail;
 
     @Column(unique = true)
-    //TODO : ajouter un index sur le username
+    //TODO : ajouter un index sur le username en BDD
     private String username;
     private String password;
 
