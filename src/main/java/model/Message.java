@@ -1,8 +1,12 @@
 package model;
 
+import dao.KeywordDAO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "MESSAGE")
@@ -32,11 +36,12 @@ public class Message {
     @ManyToMany(mappedBy = "messagesShared")
     private List<Person> sharers = new ArrayList<Person>();
 
-    public Message(Integer id, String content, Boolean isPublished, Person person) {
-        this.id = id;
+    public Message(String content, Boolean isPublished, Person person) {
         this.content = content;
         this.isPublished = isPublished;
         this.person = person;
+
+        this.parseKeywords();
     }
 
     public Message() {
@@ -56,6 +61,7 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+        this.parseKeywords();
     }
 
     public Boolean getIsPublished() {
@@ -104,5 +110,24 @@ public class Message {
 
     public void addSharer(Person sharer) {
         this.sharers.add(sharer);
+    }
+
+    private void parseKeywords() {
+        Pattern pattern = Pattern.compile("#(\\w+)\\b");
+        Matcher matcher = pattern.matcher(this.content);
+
+        KeywordDAO keywordDAO = new KeywordDAO();
+
+        while (matcher.find()) {
+            String word = matcher.group(1);
+            Keyword keyword = keywordDAO.findByWord(word);
+
+            if (keyword == null) {
+                keyword = new Keyword(word);
+                keywordDAO.insert(keyword);
+            }
+
+            this.addKeyword(keyword);
+        }
     }
 }

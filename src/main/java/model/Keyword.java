@@ -18,8 +18,7 @@ public class Keyword {
     @ManyToMany(mappedBy = "keywords")
     private List<Message> messages = new ArrayList<Message>();
 
-    public Keyword(Integer id, String word) {
-        this.id = id;
+    public Keyword(String word) {
         this.word = word;
     }
 
