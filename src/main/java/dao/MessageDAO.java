@@ -1,22 +1,25 @@
 package dao;
 
-import model.Person;
+import model.Message;
 import org.hibernate.Query;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDAO {
+/**
+ * Created by axel on 03/07/2015.
+ */
+public class MessageDAO {
 
-    public void insert(Person person) {
+    public void insert(Message message) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.save(person);
+            session.save(message);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -29,12 +32,12 @@ public class PersonDAO {
         }
     }
 
-    public void update(Person person) {
+    public void update(Message message) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.update(person);
+            session.update(message);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -47,12 +50,12 @@ public class PersonDAO {
         }
     }
 
-    public void delete(Person person) {
+    public void delete(Message message) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.delete(person);
+            session.delete(message);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -65,52 +68,34 @@ public class PersonDAO {
         }
     }
 
-    public List<Person> findAll() {
-        List<Person> persons    = new ArrayList<>();
+    public List<Message> findAll() {
+        List<Message> messages  = new ArrayList<>();
         Session session         = HibernateUtil.getSessionFactory().openSession();
-
         try {
-            persons = session.createQuery("from Person").list();
+            messages = session.createQuery("from Message").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return persons;
+        return messages;
     }
 
-    public Person findById(Integer id) {
-        Person person   = null;
+    public Message findById(Integer id) {
+        Message message = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            String queryString = "from Person where id = :id";
+            String queryString = "from Message where id = :id";
             Query query = session.createQuery(queryString);
             query.setInteger("id", id);
-            person = (Person) query.uniqueResult();
+            message = (Message) query.uniqueResult();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return person;
-    }
-
-    public Person findByUsername(String username) {
-        Person person   = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            String queryString = "from Person where username = :username";
-            Query query = session.createQuery(queryString);
-            query.setString("username", username);
-            person = (Person) query.uniqueResult();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            session.flush();
-            session.close();
-        }
-        return person;
+        return message;
     }
 }

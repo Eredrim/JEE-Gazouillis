@@ -1,22 +1,22 @@
 package dao;
 
-import model.Person;
+import model.Keyword;
 import org.hibernate.Query;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDAO {
+public class KeywordDAO {
 
-    public void insert(Person person) {
+    public void insert(Keyword keyword) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.save(person);
+            session.save(keyword);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -29,12 +29,12 @@ public class PersonDAO {
         }
     }
 
-    public void update(Person person) {
+    public void update(Keyword keyword) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.update(person);
+            session.update(keyword);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -47,12 +47,12 @@ public class PersonDAO {
         }
     }
 
-    public void delete(Person person) {
+    public void delete(Keyword keyword) {
         Transaction transaction = null;
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.delete(person);
+            session.delete(keyword);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -65,52 +65,34 @@ public class PersonDAO {
         }
     }
 
-    public List<Person> findAll() {
-        List<Person> persons    = new ArrayList<>();
+    public List<Keyword> findAll() {
+        List<Keyword> keywords  = new ArrayList<>();
         Session session         = HibernateUtil.getSessionFactory().openSession();
-
         try {
-            persons = session.createQuery("from Person").list();
+            keywords = session.createQuery("from Keyword").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return persons;
+        return keywords;
     }
 
-    public Person findById(Integer id) {
-        Person person   = null;
+    public Keyword findById(Integer id) {
+        Keyword keyword = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            String queryString = "from Person where id = :id";
+            String queryString = "from Keyword where id = :id";
             Query query = session.createQuery(queryString);
             query.setInteger("id", id);
-            person = (Person) query.uniqueResult();
+            keyword = (Keyword) query.uniqueResult();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return person;
-    }
-
-    public Person findByUsername(String username) {
-        Person person   = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            String queryString = "from Person where username = :username";
-            Query query = session.createQuery(queryString);
-            query.setString("username", username);
-            person = (Person) query.uniqueResult();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            session.flush();
-            session.close();
-        }
-        return person;
+        return keyword;
     }
 }
