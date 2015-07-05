@@ -9,18 +9,42 @@
             30
         </session-timeout>
     </session-config>
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <jsp-file>/jsp/index.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>profil</servlet-name>
-        <url-pattern>/profil</url-pattern>
+        <servlet-name>index</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>accueil</servlet-name>
+        <jsp-file>/jsp/accueil.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accueil</servlet-name>
+        <url-pattern>/accueil</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>connexion</servlet-name>
+        <jsp-file>/jsp/connexion.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>connexion</servlet-name>
         <url-pattern>/connexion</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>mon-profil</servlet-name>
+        <jsp-file>/jsp/mon-profil.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>mon-profil</servlet-name>
         <url-pattern>/mon-profil</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>recherche</servlet-name>
+        <jsp-file>/jsp/recherche.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>recherche</servlet-name>
         <url-pattern>/recherche</url-pattern>
