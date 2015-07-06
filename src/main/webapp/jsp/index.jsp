@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Accueil</title>
 </head>
-<body style="background-image: url('bird.png')">
+<body style="background-image: url('jsp/bird.png')">
 <h1>Bienvenue sur Gazouillis</h1>
 <button type="submit" class="btn btn-default">Se connecter</button>
 
