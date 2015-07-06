@@ -1,10 +1,10 @@
-package dao;
+package main.java.dao;
 
-import model.Keyword;
+import main.java.model.Keyword;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import utils.HibernateUtil;
+import main.java.utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;

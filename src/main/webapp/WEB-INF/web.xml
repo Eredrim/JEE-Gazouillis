@@ -42,6 +42,14 @@
         <url-pattern>/mon-profil</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>profil</servlet-name>
+        <jsp-file>/jsp/profil.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profil</servlet-name>
+        <url-pattern>/profil</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>recherche</servlet-name>
         <jsp-file>/jsp/recherche.jsp</jsp-file>
     </servlet>

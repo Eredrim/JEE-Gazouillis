@@ -1,4 +1,4 @@
-package model;
+package main.java.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;

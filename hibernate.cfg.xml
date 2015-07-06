@@ -16,8 +16,8 @@
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
 
-    <mapping class="model.Message"/>
-    <mapping class="model.Person"/>
-    <mapping class="model.Keyword"/>
+    <mapping class="main.java.model.Message"/>
+    <mapping class="main.java.model.Person"/>
+    <mapping class="main.java.model.Keyword"/>
   </session-factory>
 </hibernate-configuration>

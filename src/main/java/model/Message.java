@@ -1,6 +1,6 @@
-package model;
+package main.java.model;
 
-import dao.KeywordDAO;
+import main.java.dao.KeywordDAO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
