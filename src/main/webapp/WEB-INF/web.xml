@@ -34,7 +34,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MyProfileServlet</servlet-name>
-        <jsp-file>/jsp/myProfile.jsp</jsp-file>
+        <servlet-class>main.java.servlet.MyProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MyProfileServlet</servlet-name>

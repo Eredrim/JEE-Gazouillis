@@ -24,13 +24,15 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //TODO : corriger les problèmes d'accents (HTML)
+        //TODO : faire toutes les vérifs de champ des deux côtés
         Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
 
         if (req.getParameter("saveMessage") != null) {
             this.createMessage(req, person);
         }
         else if (req.getParameter("updateMessage") != null) {
-            this.publishMessage(req);
+            person = this.updateMessage(req);
         }
         else if (req.getParameter("updateProfile") != null) {
             this.updateProfile(req, person);
@@ -86,29 +88,29 @@ public class MyProfileServlet extends HttpServlet {
         Message message = new Message();
 
         message.setContent(req.getParameter("messageContent"));
-        message.setIsPublished(!req.getParameter("isMessageDraft").equals("true"));
+        message.setIsPublished(req.getParameter("isMessageDraft") == null);
         message.setPerson(person);
 
         MessageDAO messageDAO = new MessageDAO();
         messageDAO.insert(message);
     }
 
-    private void publishMessage(HttpServletRequest req) {
+    private Person updateMessage(HttpServletRequest req) {
         MessageDAO messageDAO = new MessageDAO();
         Message message = messageDAO.findById(Integer.parseInt(req.getParameter("idMessage")));
 
         message.setContent(req.getParameter("messageContent"));
-        message.setIsPublished(!req.getParameter("isMessageDraft").equals("true"));
+        message.setIsPublished(req.getParameter("isMessageDraft") == null);
 
         messageDAO.update(message);
+        return message.getPerson();
     }
 
     private void updateProfile(HttpServletRequest req, Person person) {
-        //TODO: ajouter la ville dans les BDDs
         person.setUsername(req.getParameter("username"));
         person.setName(req.getParameter("name"));
         person.setFirstName(req.getParameter("firstName"));
-//        person.setCity(req.getParameter("city"));
+        person.setCity(req.getParameter("city"));
         person.setMail(req.getParameter("mail"));
         person.setPassword(req.getParameter("password"));
 

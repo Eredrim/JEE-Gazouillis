@@ -1,6 +1,8 @@
 package main.java.model;
 
 import main.java.dao.KeywordDAO;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.regex.Pattern;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String content;
@@ -22,18 +24,21 @@ public class Message {
     private Boolean isPublished;
 
     @ManyToOne
+    @JoinColumn(name = "id_PERSON")
     private Person person;
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="HAVE",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="id_keyword")})
+    @JoinTable(name = "HAVE",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_keyword")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Keyword> keywords = new ArrayList<Keyword>();
 
     /**
      * Personnes qui ont partagé ce message
      */
     @ManyToMany(mappedBy = "messagesShared")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> sharers = new ArrayList<Person>();
 
     public Message(String content, Boolean isPublished, Person person) {
@@ -78,6 +83,7 @@ public class Message {
 
     public void setPerson(Person person) {
         this.person = person;
+        person.addMessage(this);
     }
 
     public List<Keyword> getKeywords() {
