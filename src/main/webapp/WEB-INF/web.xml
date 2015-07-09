@@ -26,7 +26,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ConnexionServlet</servlet-name>
-        <servlet-class>servlet.ConnexionServlet</servlet-class>
+        <servlet-class>main.java.servlet.ConnexionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ConnexionServlet</servlet-name>
@@ -49,11 +49,11 @@
         <url-pattern>/profil</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>recherche</servlet-name>
-        <jsp-file>/jsp/recherche.jsp</jsp-file>
+        <servlet-name>RechercheServlet</servlet-name>
+        <servlet-class>main.java.servlet.RechercheServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>recherche</servlet-name>
+        <servlet-name>RechercheServlet</servlet-name>
         <url-pattern>/recherche</url-pattern>
     </servlet-mapping>
 </web-app>

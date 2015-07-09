@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "KEYWORD", indexes = {@Index(columnList = "word", name = "keyword_word_index")})
+@Table(name = "keyword")
 public class Keyword {
 
     @Id
