@@ -33,12 +33,12 @@
         <url-pattern>/connexion</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>mon-profil</servlet-name>
-        <jsp-file>/jsp/mon-profil.jsp</jsp-file>
+        <servlet-name>MyProfileServlet</servlet-name>
+        <jsp-file>/jsp/myProfile.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>mon-profil</servlet-name>
-        <url-pattern>/mon-profil</url-pattern>
+        <servlet-name>MyProfileServlet</servlet-name>
+        <url-pattern>/myProfile</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>profil</servlet-name>
