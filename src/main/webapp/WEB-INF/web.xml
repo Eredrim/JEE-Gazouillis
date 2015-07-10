@@ -17,11 +17,11 @@
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>accueil</servlet-name>
-        <jsp-file>/jsp/accueil.jsp</jsp-file>
+        <servlet-name>AccueilServlet</servlet-name>
+        <servlet-class>main.java.servlet.AccueilServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>accueil</servlet-name>
+        <servlet-name>AccueilServlet</servlet-name>
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
     <servlet>
@@ -41,19 +41,19 @@
         <url-pattern>/myProfile</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>profil</servlet-name>
-        <jsp-file>/jsp/profil.jsp</jsp-file>
+        <servlet-name>ProfilServlet</servlet-name>
+        <servlet-class>main.java.servlet.ProfilServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>profil</servlet-name>
-        <url-pattern>/profil</url-pattern>
+        <servlet-name>ProfilServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>RechercheServlet</servlet-name>
-        <servlet-class>main.java.servlet.RechercheServlet</servlet-class>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>main.java.servlet.SearchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RechercheServlet</servlet-name>
-        <url-pattern>/recherche</url-pattern>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 </web-app>
