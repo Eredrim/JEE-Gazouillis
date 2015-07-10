@@ -16,7 +16,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#" >Accueil</a></li>
+                        <li><a href="/Accueil" >Accueil</a></li>
                         <li><a href="/myProfile" >Mon compte</a></li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search" id="searchForm" method="get" action="/search">

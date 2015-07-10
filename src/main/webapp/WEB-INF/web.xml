@@ -56,4 +56,12 @@
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ShareServlet</servlet-name>
+        <servlet-class>main.java.servlet.ShareServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShareServlet</servlet-name>
+        <url-pattern>/share</url-pattern>
+    </servlet-mapping>
 </web-app>

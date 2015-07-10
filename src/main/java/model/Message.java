@@ -117,6 +117,7 @@ public class Message {
 
     public void addSharer(Person sharer) {
         this.sharers.add(sharer);
+        sharer.addMessageShared(this);
     }
 
     public Date getCreatedAt() {
