@@ -1,5 +1,6 @@
 package main.java.model;
 
+import main.java.utils.HtmlEscape;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -60,11 +61,11 @@ public class Person {
 
 
     public Person(String firstName, String name, String mail, String username, String password) {
-        this.firstName = firstName;
-        this.name = name;
-        this.mail = mail;
-        this.username = username;
-        this.password = password;
+        this.setFirstName(firstName);
+        this.setName(name);
+        this.setMail(mail);
+        this.setUsername(username);
+        this.setPassword(password);
     }
 
     public Person() {
@@ -91,7 +92,7 @@ public class Person {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = HtmlEscape.escapeHtml(name);
     }
 
     public String getMail() {
@@ -99,7 +100,7 @@ public class Person {
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+        this.mail = HtmlEscape.escapeHtml(mail);
     }
 
     public String getUsername() {
@@ -107,7 +108,7 @@ public class Person {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = HtmlEscape.escapeHtml(username);
     }
 
     public String getPassword() {

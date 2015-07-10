@@ -1,10 +1,12 @@
 package main.java.model;
 
 import main.java.dao.KeywordDAO;
+import main.java.utils.HtmlEscape;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,14 +50,6 @@ public class Message {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> sharers = new ArrayList<Person>();
 
-    public Message(String content, Boolean isPublished, Person person) {
-        this.content = content;
-        this.isPublished = isPublished;
-        this.person = person;
-
-        this.parseKeywords();
-    }
-
     public Message() {
     }
 
@@ -72,8 +66,8 @@ public class Message {
     }
 
     public void setContent(String content) {
-        this.content = content;
-        this.parseKeywords();
+        this.content = HtmlEscape.escapeHtml(content);
+        this.parseKeywords(content);
     }
 
     public Boolean getIsPublished() {
@@ -141,11 +135,12 @@ public class Message {
         this.updatedAt = updatedAt;
     }
 
-    private void parseKeywords() {
+    private void parseKeywords(String content) {
         Pattern pattern = Pattern.compile("#(\\w+)\\b");
-        Matcher matcher = pattern.matcher(this.content);
+        Matcher matcher = pattern.matcher(content);
 
         KeywordDAO keywordDAO = new KeywordDAO();
+        this.keywords = new ArrayList<>();
 
         while (matcher.find()) {
             String word = matcher.group(1);
@@ -156,7 +151,7 @@ public class Message {
                 keywordDAO.insert(keyword);
             }
 
-            this.addKeyword(keyword);
+            this.keywords.add(keyword);
         }
     }
 }

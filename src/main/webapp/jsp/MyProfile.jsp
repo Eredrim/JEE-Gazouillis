@@ -3,8 +3,10 @@
 <%@ page import="main.java.model.Message" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Person person = (Person) request.getAttribute("user"); %>
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <%@include file="HeadCSS.jsp"%>
     <title>Mon Profil</title>
 </head>

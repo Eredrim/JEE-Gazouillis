@@ -5,6 +5,7 @@ import main.java.dao.MessageDAO;
 import main.java.dao.PersonDAO;
 import main.java.model.Message;
 import main.java.model.Person;
+import main.java.utils.HtmlEscape;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,29 +28,34 @@ public class MyProfileServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO : corriger les problèmes d'accents (HTML)
         //TODO : faire toutes les vérifs de champ des deux côtés
+        /**
+         * Forcing UTF-8 encoding for the parameters
+         */
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
 
         if (req.getParameter("saveMessage") != null) {
             this.createMessage(req, person);
         }
         else if (req.getParameter("updateMessage") != null) {
-            person = this.updateMessage(req);
+            this.updateMessage(req);
         }
         else if (req.getParameter("updateProfile") != null) {
             this.updateProfile(req, person);
         }
 
-        this.sendPage(req, resp, person);
+        this.doGet(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
 
-        this.sendPage(req, resp, person);
-    }
-
-    private void sendPage(HttpServletRequest req, HttpServletResponse resp, Person person) throws ServletException, IOException {
         List<Message> publishedMessages = new ArrayList<>();
         List<Message> draftMessages = new ArrayList<>();
 
@@ -85,14 +92,16 @@ public class MyProfileServlet extends HttpServlet {
     }
 
     private void createMessage(HttpServletRequest req, Person person) {
-        Message message = new Message();
+        if (req.getParameter("messageContent") != null) {
+            Message message = new Message();
 
-        message.setContent(req.getParameter("messageContent"));
-        message.setIsPublished(req.getParameter("isMessageDraft") == null);
-        message.setPerson(person);
+            message.setContent(req.getParameter("messageContent"));
+            message.setIsPublished(req.getParameter("isMessageDraft") == null);
+            message.setPerson(person);
 
-        MessageDAO messageDAO = new MessageDAO();
-        messageDAO.insert(message);
+            MessageDAO messageDAO = new MessageDAO();
+            messageDAO.insert(message);
+        }
     }
 
     private Person updateMessage(HttpServletRequest req) {
@@ -112,7 +121,10 @@ public class MyProfileServlet extends HttpServlet {
         person.setFirstName(req.getParameter("firstName"));
         person.setCity(req.getParameter("city"));
         person.setMail(req.getParameter("mail"));
-        person.setPassword(req.getParameter("password"));
+
+        if (req.getParameter("password") != null) {
+            person.setPassword(req.getParameter("password"));
+        }
 
         PersonDAO personDAO = new PersonDAO();
         personDAO.update(person);
