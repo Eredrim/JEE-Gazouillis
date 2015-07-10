@@ -26,8 +26,6 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO : corriger les problèmes d'accents (HTML)
-        //TODO : faire toutes les vérifs de champ des deux côtés
         /**
          * Forcing UTF-8 encoding for the parameters
          */
@@ -56,17 +54,8 @@ public class MyProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
 
-        List<Message> publishedMessages = new ArrayList<>();
-        List<Message> draftMessages = new ArrayList<>();
-
-        for (Message message : person.getMessages()) {
-            if (message.getIsPublished()) {
-                publishedMessages.add(message);
-            }
-            else {
-                draftMessages.add(message);
-            }
-        }
+        List<Message> publishedMessages = person.getPublishedMessages();
+        List<Message> draftMessages = person.getDraftMessages();
 
         req.setAttribute("user", person);
 

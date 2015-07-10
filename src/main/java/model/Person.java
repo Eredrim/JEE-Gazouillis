@@ -132,6 +132,30 @@ public class Person {
         return this.messages.get(index);
     }
 
+    public List<Message> getPublishedMessages() {
+        List<Message> messages = new ArrayList<>();
+
+        for (Message message : this.messages) {
+            if (message.getIsPublished()) {
+                messages.add(message);
+            }
+        }
+
+        return messages;
+    }
+
+    public List<Message> getDraftMessages() {
+        List<Message> messages = new ArrayList<>();
+
+        for (Message message : this.messages) {
+            if (!message.getIsPublished()) {
+                messages.add(message);
+            }
+        }
+
+        return messages;
+    }
+
     public void addMessage(Message message) {
         this.messages.add(message);
     }
