@@ -1,9 +1,14 @@
 package main.java.model;
 
 import main.java.dao.KeywordDAO;
+import main.java.utils.HtmlEscape;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,36 +18,37 @@ import java.util.regex.Pattern;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String content;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     @Column(name = "is_published")
     private Boolean isPublished;
 
     @ManyToOne
+    @JoinColumn(name = "id_PERSON")
     private Person person;
 
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="HAVE",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="id_keyword")})
+    @JoinTable(name = "HAVE",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_keyword")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Keyword> keywords = new ArrayList<Keyword>();
 
     /**
      * Personnes qui ont partagé ce message
      */
     @ManyToMany(mappedBy = "messagesShared")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> sharers = new ArrayList<Person>();
-
-    public Message(String content, Boolean isPublished, Person person) {
-        this.content = content;
-        this.isPublished = isPublished;
-        this.person = person;
-
-        this.parseKeywords();
-    }
 
     public Message() {
     }
@@ -60,8 +66,8 @@ public class Message {
     }
 
     public void setContent(String content) {
-        this.content = content;
-        this.parseKeywords();
+        this.content = HtmlEscape.escapeHtml(content);
+        this.parseKeywords(content);
     }
 
     public Boolean getIsPublished() {
@@ -78,6 +84,7 @@ public class Message {
 
     public void setPerson(Person person) {
         this.person = person;
+        person.addMessage(this);
     }
 
     public List<Keyword> getKeywords() {
@@ -112,11 +119,28 @@ public class Message {
         this.sharers.add(sharer);
     }
 
-    private void parseKeywords() {
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    private void parseKeywords(String content) {
         Pattern pattern = Pattern.compile("#(\\w+)\\b");
-        Matcher matcher = pattern.matcher(this.content);
+        Matcher matcher = pattern.matcher(content);
 
         KeywordDAO keywordDAO = new KeywordDAO();
+        this.keywords = new ArrayList<>();
 
         while (matcher.find()) {
             String word = matcher.group(1);
@@ -127,7 +151,7 @@ public class Message {
                 keywordDAO.insert(keyword);
             }
 
-            this.addKeyword(keyword);
+            this.keywords.add(keyword);
         }
     }
 }
