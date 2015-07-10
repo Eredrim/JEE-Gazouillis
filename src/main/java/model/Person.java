@@ -39,8 +39,8 @@ public class Person {
     @ManyToMany(cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "FOLLOW",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id_PERSON")})
+            joinColumns = {@JoinColumn(name = "id_PERSON")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<Person> followers = new ArrayList<Person>();
 
     /**

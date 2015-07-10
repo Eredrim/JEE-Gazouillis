@@ -17,11 +17,11 @@
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>accueil</servlet-name>
-        <jsp-file>/jsp/accueil.jsp</jsp-file>
+        <servlet-name>AccueilServlet</servlet-name>
+        <servlet-class>main.java.servlet.AccueilServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>accueil</servlet-name>
+        <servlet-name>AccueilServlet</servlet-name>
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
     <servlet>

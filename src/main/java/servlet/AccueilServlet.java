@@ -33,14 +33,17 @@ public class AccueilServlet extends HttpServlet {
 		List<Message> messagesMonde = new ArrayList<>();
 		List<Message> messagesSuivi = new ArrayList<>();
 		//Person personConnecte = personDAO.findByUsername((String)req.getSession().getAttribute("username"));
-		Person personConnecte = personDAO.findByUsername("axel");
+		Person personConnecte = personDAO.findByUsername("faon");
 
+		List<Person> follows = personConnecte.getFollows();
 		//on charge les messages dans les listes
 		for (Message message : messageList){
 			if(message.getIsPublished()){
-				List<Person> persons = message.getPerson().getFollowers();
-				if(persons.contains(personConnecte)){
-					messagesSuivi.add(message);
+				Person author = message.getPerson();
+				for(Person follow : follows){
+					if(follow.getId().equals(author.getId())) {
+						messagesSuivi.add(message);
+					}
 				}
 				messagesMonde.add(message);
 			}
