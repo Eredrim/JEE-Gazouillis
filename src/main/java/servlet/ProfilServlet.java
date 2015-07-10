@@ -72,14 +72,8 @@ public class ProfilServlet extends HttpServlet {
             
             pDao.update(personToFollow);
             pDao.update(connectedPerson);
-            try {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/profile.jsp");
-                dispatcher.forward(request, response);
-            } catch (NumberFormatException | ServletException | IOException e) {
-                System.err.println(e);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/static/404.html");
-                dispatcher.forward(request, response);
-            }
+
+            this.doGet(request, response);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/static/404.html");
             dispatcher.forward(request, response);
