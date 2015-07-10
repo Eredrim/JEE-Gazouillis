@@ -12,7 +12,7 @@
         <div>
             <div><% out.print(p.getUsername() + ", " + p.getCity()); %></div>
             <div>Nombre d'abonnés : <% out.print(p.getFollowers().size()); %></div>
-            <div>Nombre de messages publiés : [à compléter]</div>
+            <div>Nombre de messages publiés : <% out.print(p.getPublishedMessages().size()); %></div>
         </div>
         <div>
             <form action="/abonnement" method="post">
