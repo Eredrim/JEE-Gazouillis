@@ -1,6 +1,10 @@
 <%@ page import="main.java.model.Message" %>
 <%@ page import="java.util.List" %>
+<%@ page import="main.java.model.Person" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Person me = (Person)request.getAttribute("connectedPerson");
+%>
 <html>
 <head>
     <%@include file="HeadCSS.jsp"%>
@@ -31,11 +35,16 @@
                                     <label for="publishedMessage<%= messageMonde.getId() %>" class="control-label"><a href="/profile?user=<%= messageMonde.getPerson().getUsername() %>"><%= messageMonde.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= messageMonde.getUpdatedAt().toLocaleString() %></small></label>
                                     <textarea class="form-control" id="publishedMessage<%= messageMonde.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= messageMonde.getContent() %></textarea>
                                 </div>
-                                <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
+                                <%
+                                    if (!me.getMessagesShared().contains(messageMonde)){
+                                %>
                                 <form action="/share" method="post" class="form-horizontal">
                                     <input type="hidden" name="idGazouille" value="<%= messageMonde.getId()%>"/>
                                     <button type="submit" class="btn btn-info pull-right">Partager</button>
                                 </form>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     <%
@@ -67,11 +76,16 @@
                                 <textarea class="form-control" id="publishedMessage<%= messageSuivi.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= messageSuivi.getContent() %></textarea>
                             </div>
                         </div>
-                        <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
+                        <%
+                            if (!me.getMessagesShared().contains(messageSuivi)){
+                        %>
                         <form action="/share" method="post" class="form-horizontal">
                             <input type="hidden" name="idGazouille" value="<%= messageSuivi.getId()%>"/>
                             <button type="submit" class="btn btn-info pull-right">Partager</button>
                         </form>
+                        <%
+                            }
+                        %>
                     </div>
                     <%
                             }

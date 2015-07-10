@@ -3,17 +3,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Person p = (Person) request.getAttribute("profile");
-    String abonner;
-
-    if (request.getAttribute("followed") == null) {
-        abonner = "S'abonner";
-    } else {
-        abonner = "Se désabonner";
-    }
+    Person me = (Person) session.getAttribute("connectedPerson");
 %>
 <html>
     <head>
-        <%@include file="HeadCSS.jsp"%>
         <title>Profil de <% out.print(p.getUsername()); %></title>
     </head>
     <body>
@@ -30,7 +23,15 @@
                             <p>Nombre de messages publiés : <span class="badge"><%= p.getPublishedMessages().size() %></span></p>
                             <form action="/abonnement" method="post" class="form-horizontal">
                                 <input type="hidden" name="idUtilisateur" value=""/>
-                                <button type="submit" class="btn btn-primary pull-right"><%= abonner %></button>
+                                <button type="submit" class="btn btn-primary pull-right">
+                                    <% if(me.isFollowing(p)){
+                                        out.print("Se désabonner");
+                                    }
+                                    else
+                                    {
+                                        out.print("S'abonner");
+                                    }%>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -55,11 +56,16 @@
                                         <label for="publishedMessage<%= message.getId() %>" class="control-label"><a href="/profile?user=<%= message.getPerson().getUsername() %>"><%= message.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= message.getUpdatedAt().toLocaleString() %></small></label>
                                         <textarea class="form-control" id="publishedMessage<%= message.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= message.getContent() %></textarea>
                                     </div>
-                                    <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
-                                    <form action="/share" method="post" class="form-horizontal">
-                                        <input type="hidden" name="idGazouille" value="<%= message.getId()%>"/>
-                                        <button type="submit" class="btn btn-info pull-right">Partager</button>
-                                    </form>
+                                    <%
+                                        if (!me.getMessagesShared().contains(message)){
+                                    %>
+                                        <form action="/share" method="post" class="form-horizontal">
+                                            <input type="hidden" name="idGazouille" value="<%= message.getId()%>"/>
+                                            <button type="submit" class="btn btn-info pull-right">Partager</button>
+                                        </form>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
                             <%

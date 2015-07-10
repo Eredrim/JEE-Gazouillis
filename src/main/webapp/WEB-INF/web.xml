@@ -25,12 +25,12 @@
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ConnexionServlet</servlet-name>
-        <servlet-class>main.java.servlet.ConnexionServlet</servlet-class>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <servlet-class>main.java.servlet.ConnectionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ConnexionServlet</servlet-name>
-        <url-pattern>/connexion</url-pattern>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <url-pattern>/connection</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>MyProfileServlet</servlet-name>
@@ -55,5 +55,13 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ShareServlet</servlet-name>
+        <servlet-class>main.java.servlet.ShareServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShareServlet</servlet-name>
+        <url-pattern>/share</url-pattern>
     </servlet-mapping>
 </web-app>
