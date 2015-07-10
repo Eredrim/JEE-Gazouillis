@@ -28,8 +28,13 @@ public class ProfilServlet extends HttpServlet {
         if (request.getParameter("user") != null) {
             PersonDAO pDao = new PersonDAO();
             Person p = pDao.findByUsername(request.getParameter("user"));
+
+            HttpSession session = request.getSession();
+            Person connectedPerson = (Person) session.getAttribute("connectedPerson");
+
             if (p != null) {
                 request.setAttribute("profile", p);
+                request.setAttribute("connectedPerson", connectedPerson);
                 try {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/profile.jsp");
                     dispatcher.forward(request, response);

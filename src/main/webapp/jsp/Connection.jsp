@@ -7,8 +7,7 @@
     <title>Mon Profil</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 50px;">
     <div class="col-md-offset-1 col-md-4">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -66,7 +65,7 @@
                         <input type="password" class="form-control" name="password" id="formConnectMdp"/>
                     </div>
 
-                    <button type="submit" class="btn btn-primary pull-right" name="connection">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary pull-right" name="connection">Connexion</button>
                 </form>
             </div>
         </div>

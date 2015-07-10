@@ -121,6 +121,26 @@
                         <%
                             }
                         %>
+                        <%
+                            List<Message> sharedMessages = (List<Message>)request.getAttribute("sharedMessages");
+                            if (sharedMessages.size() != 0) {
+                        %>
+                        <h4 class="text-center">Gazouillis partagés</h4>
+                        <%
+                            }
+                            for (Message sharedMessage : sharedMessages) {
+                        %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sharedMessage<%= sharedMessage.getId() %>" class="control-label"><small><%= sharedMessage.getUpdatedAt().toLocaleString() %></small></label>
+                                    <textarea class="form-control" id="sharedMessage<%= sharedMessage.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= sharedMessage.getContent() %></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
             </div>

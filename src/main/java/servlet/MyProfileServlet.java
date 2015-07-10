@@ -61,6 +61,7 @@ public class MyProfileServlet extends HttpServlet {
 
         List<Message> publishedMessages = person.getPublishedMessages();
         List<Message> draftMessages = person.getDraftMessages();
+        List<Message> sharedMessages = person.getMessagesShared();
 
         req.setAttribute("user", person);
 
@@ -70,6 +71,7 @@ public class MyProfileServlet extends HttpServlet {
 
         req.setAttribute("draftMessages", draftMessages);
         req.setAttribute("publishedMessages", publishedMessages);
+        req.setAttribute("sharedMessages", sharedMessages);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/MyProfile.jsp");
         dispatcher.forward(req, resp);

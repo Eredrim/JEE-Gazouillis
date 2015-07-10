@@ -26,7 +26,7 @@ public class ConnectionServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        System.out.println("init: loading connexion servlet");
+        System.out.println("init: loading connection servlet");
         super.init();
     }
 
@@ -34,7 +34,7 @@ public class ConnectionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PersonDAO personDAO = new PersonDAO();
 
-        System.out.println("GET /connexion");
+        System.out.println("GET /connection");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Connection.jsp");
         dispatcher.forward(request, response);
@@ -42,7 +42,7 @@ public class ConnectionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("POST /connexion");
+        System.out.println("POST /connection");
         request.setCharacterEncoding("UTF-8");
 
         boolean connected = false;
