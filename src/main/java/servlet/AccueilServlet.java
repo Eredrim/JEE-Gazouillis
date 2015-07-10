@@ -32,8 +32,7 @@ public class AccueilServlet extends HttpServlet {
 		List<Message> messageList = messageDAO.findAll();
 		List<Message> messagesMonde = new ArrayList<>();
 		List<Message> messagesSuivi = new ArrayList<>();
-		//Person personConnecte = personDAO.findByUsername((String)req.getSession().getAttribute("username"));
-		Person personConnecte = personDAO.findByUsername("faon");
+		Person personConnecte = (Person)req.getSession().getAttribute("connectedPerson");
 
 		List<Person> follows = personConnecte.getFollows();
 		//on charge les messages dans les listes
