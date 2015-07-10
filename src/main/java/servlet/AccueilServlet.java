@@ -29,7 +29,7 @@ public class AccueilServlet extends HttpServlet {
 		MessageDAO messageDAO = new MessageDAO();
 		PersonDAO personDAO = new PersonDAO();
 
-		List<Message> messageList = messageDAO.findAll();
+		List<Message> messageList = messageDAO.findAllPublished();
 		List<Message> messagesMonde = new ArrayList<>();
 		List<Message> messagesSuivi = new ArrayList<>();
 		//Person personConnecte = personDAO.findByUsername((String)req.getSession().getAttribute("username"));
@@ -38,15 +38,13 @@ public class AccueilServlet extends HttpServlet {
 		List<Person> follows = personConnecte.getFollows();
 		//on charge les messages dans les listes
 		for (Message message : messageList){
-			if(message.getIsPublished()){
-				Person author = message.getPerson();
-				for(Person follow : follows){
-					if(follow.getId().equals(author.getId())) {
-						messagesSuivi.add(message);
-					}
+			Person author = message.getPerson();
+			for(Person follow : follows){
+				if(follow.getId().equals(author.getId())) {
+					messagesSuivi.add(message);
 				}
-				messagesMonde.add(message);
 			}
+			messagesMonde.add(message);
 		}
 
 		req.setAttribute("messagesMonde", messagesMonde);

@@ -69,7 +69,21 @@ public class MessageDAO {
         List<Message> messages  = new ArrayList<>();
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
-            messages = session.createQuery("from Message").list();
+            messages = session.createQuery("from Message order by updatedAt DESC").list();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return messages;
+    }
+
+    public List<Message> findAllPublished() {
+        List<Message> messages  = new ArrayList<>();
+        Session session         = HibernateUtil.getSessionFactory().openSession();
+        try {
+            messages = session.createQuery("from Message where isPublished = true order by updatedAt DESC").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
