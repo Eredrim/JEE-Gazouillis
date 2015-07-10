@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,7 @@ public class MyProfileServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
+        Person person = (Person) req.getSession().getAttribute("connectedPerson");
 
         if (req.getParameter("saveMessage") != null) {
             this.createMessage(req, person);
@@ -52,7 +54,8 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Person person = this.getConnectedUser(req.getSession().getAttribute("username"));
+        //TODO: redirects when no user connected
+        Person person = (Person) req.getSession().getAttribute("connectedPerson");
 
         List<Message> publishedMessages = person.getPublishedMessages();
         List<Message> draftMessages = person.getDraftMessages();
@@ -68,16 +71,6 @@ public class MyProfileServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/MyProfile.jsp");
         dispatcher.forward(req, resp);
-    }
-
-    private Person getConnectedUser(Object username) {
-        username = "axel";
-        if (username == null) {
-            //TODO : redirect when user not connected
-        }
-
-        PersonDAO personDAO = new PersonDAO();
-        return personDAO.findByUsername((String) username);
     }
 
     private void createMessage(HttpServletRequest req, Person person) {
@@ -114,7 +107,17 @@ public class MyProfileServlet extends HttpServlet {
         person.setMail(req.getParameter("mail"));
 
         if (req.getParameter("password") != null) {
-            person.setPassword(req.getParameter("password"));
+            String password = req.getParameter("password");
+
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+                password = new String(md.digest(password.getBytes()));
+
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            }
+            person.setPassword(password);
         }
 
         PersonDAO personDAO = new PersonDAO();

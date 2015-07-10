@@ -25,12 +25,12 @@
         <url-pattern>/accueil</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ConnexionServlet</servlet-name>
-        <servlet-class>main.java.servlet.ConnexionServlet</servlet-class>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <servlet-class>main.java.servlet.ConnectionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ConnexionServlet</servlet-name>
-        <url-pattern>/connexion</url-pattern>
+        <servlet-name>ConnectionServlet</servlet-name>
+        <url-pattern>/connection</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>MyProfileServlet</servlet-name>
