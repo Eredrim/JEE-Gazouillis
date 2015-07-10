@@ -15,7 +15,7 @@ import main.java.model.Keyword;
 import main.java.model.Message;
 import main.java.model.Person;
 
-public class RechercheServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
@@ -44,8 +44,9 @@ public class RechercheServlet extends HttpServlet {
 
 		req.setAttribute("messages", messageList);
 		req.setAttribute("person", person);
+		req.setAttribute("recherche", recherche);
 
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/recherche.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/Search.jsp");
 		dispatcher.forward(req, resp);
 	}
 }
