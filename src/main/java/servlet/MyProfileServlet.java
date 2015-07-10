@@ -5,7 +5,6 @@ import main.java.dao.MessageDAO;
 import main.java.dao.PersonDAO;
 import main.java.model.Message;
 import main.java.model.Person;
-import main.java.utils.HtmlEscape;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MyProfileServlet extends HttpServlet {
@@ -98,21 +98,23 @@ public class MyProfileServlet extends HttpServlet {
             message.setContent(req.getParameter("messageContent"));
             message.setIsPublished(req.getParameter("isMessageDraft") == null);
             message.setPerson(person);
+            message.setCreatedAt(new Date());
+            message.setUpdatedAt(new Date());
 
             MessageDAO messageDAO = new MessageDAO();
             messageDAO.insert(message);
         }
     }
 
-    private Person updateMessage(HttpServletRequest req) {
+    private void updateMessage(HttpServletRequest req) {
         MessageDAO messageDAO = new MessageDAO();
         Message message = messageDAO.findById(Integer.parseInt(req.getParameter("idMessage")));
 
         message.setContent(req.getParameter("messageContent"));
         message.setIsPublished(req.getParameter("isMessageDraft") == null);
+        message.setUpdatedAt(new Date());
 
         messageDAO.update(message);
-        return message.getPerson();
     }
 
     private void updateProfile(HttpServletRequest req, Person person) {

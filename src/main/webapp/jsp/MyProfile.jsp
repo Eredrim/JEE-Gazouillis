@@ -26,7 +26,7 @@
                     <h5>Nombre de messages publiés : <span class="badge"><%= request.getAttribute("publishedMessageNumber") %></span></h5>
                     <br/>
                     <%
-                        if ((int)request.getAttribute("followerNumber") != 0) {
+                        if ((Integer)request.getAttribute("followerNumber") != 0) {
                     %>
                         <h4>Abonnés</h4>
                     <%

@@ -30,6 +30,7 @@ public class Person {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OrderBy("updatedAt DESC")
     private List<Message> messages = new ArrayList<Message>();
 
     /**
