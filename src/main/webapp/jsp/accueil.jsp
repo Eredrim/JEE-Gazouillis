@@ -28,9 +28,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="publishedMessage<%= messageMonde.getId() %>" class="control-label"><a href="#"><%= messageMonde.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= messageMonde.getUpdatedAt().toLocaleString() %></small></label>
+                                    <label for="publishedMessage<%= messageMonde.getId() %>" class="control-label"><a href="/profile?user=<%= messageMonde.getPerson().getUsername() %>"><%= messageMonde.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= messageMonde.getUpdatedAt().toLocaleString() %></small></label>
                                     <textarea class="form-control" id="publishedMessage<%= messageMonde.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= messageMonde.getContent() %></textarea>
                                 </div>
+                                <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
+                                <form action="/share" method="post" class="form-horizontal">
+                                    <input type="hidden" name="idGazouille" value="<%= messageMonde.getId()%>"/>
+                                    <button type="submit" class="btn btn-info pull-right">Partager</button>
+                                </form>
                             </div>
                         </div>
                     <%
@@ -58,10 +63,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="publishedMessage<%= messageSuivi.getId() %>" class="control-label"><a href="#"><%= messageSuivi.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= messageSuivi.getUpdatedAt().toLocaleString() %></small></label>
+                                <label for="publishedMessage<%= messageSuivi.getId() %>" class="control-label"><a href="/profile?user=<%= messageSuivi.getPerson().getUsername() %>"><%= messageSuivi.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= messageSuivi.getUpdatedAt().toLocaleString() %></small></label>
                                 <textarea class="form-control" id="publishedMessage<%= messageSuivi.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= messageSuivi.getContent() %></textarea>
                             </div>
                         </div>
+                        <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
+                        <form action="/share" method="post" class="form-horizontal">
+                            <input type="hidden" name="idGazouille" value="<%= messageSuivi.getId()%>"/>
+                            <button type="submit" class="btn btn-info pull-right">Partager</button>
+                        </form>
                     </div>
                     <%
                             }

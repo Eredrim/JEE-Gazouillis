@@ -52,9 +52,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="publishedMessage<%= message.getId() %>" class="control-label"><a href="#"><%= message.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= message.getUpdatedAt().toLocaleString() %></small></label>
+                                    <label for="publishedMessage<%= message.getId() %>" class="control-label"><a href="/profile?user=<%= message.getPerson().getUsername() %>"><%= message.getPerson().getUsername() %></a>&nbsp;&nbsp;<small style="color: #cccccc"><%= message.getUpdatedAt().toLocaleString() %></small></label>
                                     <textarea class="form-control" id="publishedMessage<%= message.getId() %>" cols="50" rows="3" style="resize: none" readonly><%= message.getContent() %></textarea>
                                 </div>
+                                <%--Quand on aura le connecté : test si on a déjà partagé le message--%>
+                                <form action="/share" method="post" class="form-horizontal">
+                                    <input type="hidden" name="idGazouille" value="<%= message.getId()%>"/>
+                                    <button type="submit" class="btn btn-info pull-right">Partager</button>
+                                </form>
                             </div>
                         </div>
                     <%
