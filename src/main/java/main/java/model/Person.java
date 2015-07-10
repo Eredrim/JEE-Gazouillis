@@ -1,8 +1,5 @@
 package main.java.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +9,7 @@ import java.util.List;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "first_name")
@@ -20,42 +17,37 @@ public class Person {
 
     private String name;
     private String mail;
-    private String city;
 
     @Column(unique = true)
     //TODO : ajouter un index sur le username en BDD
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy="person",cascade=CascadeType.ALL)
     private List<Message> messages = new ArrayList<Message>();
 
     /**
      * Correspond aux personnes qui nous suivent
      */
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "FOLLOW",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id_PERSON")})
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="FOLLOW",
+            joinColumns={@JoinColumn(name="id")},
+            inverseJoinColumns={@JoinColumn(name="id_PERSON")})
     private List<Person> followers = new ArrayList<Person>();
 
     /**
      * Correspond aux personnes que l'on suit
      */
-    @ManyToMany(mappedBy = "followers")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(mappedBy="followers")
     private List<Person> follows = new ArrayList<Person>();
 
     /**
      * Liste des gazouillis des autres que l'on partage
      */
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "SHARE",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id_MESSAGE")})
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name="SHARE",
+            joinColumns={@JoinColumn(name="id")},
+            inverseJoinColumns={@JoinColumn(name="id_MESSAGE")})
     private List<Message> messagesShared = new ArrayList<Message>();
 
 
@@ -180,13 +172,5 @@ public class Person {
 
     public void addMessageShared(Message messageShared) {
         this.messagesShared.add(messageShared);
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 }
