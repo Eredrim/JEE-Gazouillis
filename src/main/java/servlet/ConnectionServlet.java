@@ -49,8 +49,7 @@ public class ConnectionServlet extends HttpServlet {
         }
 
         if (connected) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Accueil.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/accueil") );
         }
         else {
             this.doGet(request, response);
