@@ -1,5 +1,8 @@
 package main.java.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +12,14 @@ import java.util.List;
 public class Keyword {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(unique = true)
     private String word;
 
     @ManyToMany(mappedBy = "keywords")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Message> messages = new ArrayList<Message>();
 
     public Keyword(String word) {
