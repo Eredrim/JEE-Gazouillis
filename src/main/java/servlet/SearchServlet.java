@@ -1,7 +1,7 @@
 package main.java.servlet;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import main.java.model.Keyword;
 import main.java.model.Message;
 import main.java.model.Person;
 
-public class RechercheServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
@@ -31,14 +31,22 @@ public class RechercheServlet extends HttpServlet {
 
 		String recherche = String.valueOf(req.getParameter("recherche"));
 		Keyword keyword = keywordDAO.findByWord(recherche);
-		List<Message> messageList = keyword.getMessages();
+		List<Message> messageList;
+		if(keyword != null){
+			messageList = keyword.getMessages();
+		}
+		else{
+			messageList = new ArrayList<>();
+		}
+
 
 		Person person = personDAO.findByUsername(recherche);
 
 		req.setAttribute("messages", messageList);
 		req.setAttribute("person", person);
+		req.setAttribute("recherche", recherche);
 
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/recherche.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/Search.jsp");
 		dispatcher.forward(req, resp);
 	}
 }
