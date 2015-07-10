@@ -25,7 +25,7 @@
                         if (person != null) {
                     %>
                         <div class="list-group">
-                            <a href="#" class="list-group-item"><%= person.getUsername() %></a>
+                            <a href="/profile?user=<%= person.getUsername() %>" class="list-group-item"><%= person.getUsername() %></a>
                         </div>
                     <%
                         } else {

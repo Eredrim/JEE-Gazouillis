@@ -36,7 +36,7 @@
                         <%
                             for (Person following : (List<Person>)request.getAttribute("followings")) {
                         %>
-                            <a href="#" class="list-group-item"><%= following.getUsername() %></a>
+                            <a href="/profile?user=<%= following.getUsername() %>" class="list-group-item"><%= following.getUsername() %></a>
                         <%
                             }
                         %>

@@ -16,6 +16,7 @@ public class PersonDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
+            session.clear();
             session.save(person);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -34,7 +35,8 @@ public class PersonDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.update(person);
+            session.clear();
+            session.merge(person);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {

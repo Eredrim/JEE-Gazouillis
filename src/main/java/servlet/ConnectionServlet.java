@@ -69,7 +69,7 @@ public class ConnectionServlet extends HttpServlet {
         Person person = personDAO.findByUsername(req.getParameter("username"));
 
         if (person != null && person.getPassword().equals(password)) {
-            req.getSession().setAttribute("connectedPerson", person);
+            req.getSession().setAttribute("connectedPerson", person.getUsername());
             return true;
         }
         return false;
@@ -89,7 +89,7 @@ public class ConnectionServlet extends HttpServlet {
         PersonDAO personDAO = new PersonDAO();
         personDAO.insert(person);
 
-        req.getSession().setAttribute("connectedPerson", person);
+        req.getSession().setAttribute("connectedPerson", person.getUsername());
         return true;
     }
 

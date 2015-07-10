@@ -30,7 +30,7 @@ public class ShareServlet extends HttpServlet {
 		System.out.println("GET /share");
 		KeywordDAO keywordDAO = new KeywordDAO();
 		PersonDAO personDAO = new PersonDAO();
-		Person personConnecte = (Person)req.getSession().getAttribute("connectedPerson");
+		Person personConnecte = (new PersonDAO()).findByUsername((String)req.getSession().getAttribute("connectedPerson"));
 
 		int idMessage = Integer.parseInt(String.valueOf(req.getParameter("idGazouille")));
 		MessageDAO messageDAO = new MessageDAO();

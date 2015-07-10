@@ -16,6 +16,7 @@ public class MessageDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
+            session.clear();
             session.save(message);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -34,7 +35,8 @@ public class MessageDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.update(message);
+            session.clear();
+            session.merge(message);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {

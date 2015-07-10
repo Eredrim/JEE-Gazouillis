@@ -46,7 +46,7 @@ public class Message {
     /**
      * Personnes qui ont partagé ce message
      */
-    @ManyToMany(mappedBy = "messagesShared")
+    @ManyToMany(mappedBy = "messagesShared", cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> sharers = new ArrayList<Person>();
 
@@ -154,5 +154,21 @@ public class Message {
 
             this.keywords.add(keyword);
         }
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if (object != null && object instanceof Message)
+        {
+            return (this.id == ((Message) object).getId());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 }

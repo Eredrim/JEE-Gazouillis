@@ -16,6 +16,7 @@ public class KeywordDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
+            session.clear();
             session.save(keyword);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -34,7 +35,7 @@ public class KeywordDAO {
         Session session         = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.update(keyword);
+            session.merge(keyword);
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             if (transaction != null) {

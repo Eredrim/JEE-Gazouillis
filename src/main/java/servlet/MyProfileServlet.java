@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyProfileServlet extends HttpServlet {
+public class MyProfileServlet extends Servlet {
     @Override
     public void init() throws ServletException {
         System.out.println("init: loading profile servlet");
@@ -29,7 +29,7 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        super.doPost(req, resp);
         /**
          * Forcing UTF-8 encoding for the parameters
          */
@@ -39,7 +39,7 @@ public class MyProfileServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Person person = (Person) req.getSession().getAttribute("connectedPerson");
+        Person person = (new PersonDAO()).findByUsername((String)req.getSession().getAttribute("connectedPerson"));
 
         if (req.getParameter("saveMessage") != null) {
             this.createMessage(req, person);
@@ -57,7 +57,7 @@ public class MyProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
-        Person person = (Person) req.getSession().getAttribute("connectedPerson");
+        Person person = (new PersonDAO()).findByUsername((String)req.getSession().getAttribute("connectedPerson"));
 
         List<Message> publishedMessages = person.getPublishedMessages();
         List<Message> draftMessages = person.getDraftMessages();
@@ -67,7 +67,7 @@ public class MyProfileServlet extends HttpServlet {
 
         req.setAttribute("followerNumber", person.getFollowers().size());
         req.setAttribute("publishedMessageNumber", publishedMessages.size());
-        req.setAttribute("followings", person.getFollows());
+        req.setAttribute("followings", person.getFollowers());
 
         req.setAttribute("draftMessages", draftMessages);
         req.setAttribute("publishedMessages", publishedMessages);
@@ -110,7 +110,7 @@ public class MyProfileServlet extends HttpServlet {
         person.setCity(req.getParameter("city"));
         person.setMail(req.getParameter("mail"));
 
-        if (req.getParameter("password") != null) {
+        if (!req.getParameter("password").equals("")) {
             String password = Encrypt.encrypt(req.getParameter("password"));
             person.setPassword(password);
         }

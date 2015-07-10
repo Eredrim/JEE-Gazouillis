@@ -1,12 +1,14 @@
 <%@page import="main.java.model.Message"%>
 <%@page import="main.java.model.Person"%>
+<%@ page import="main.java.dao.PersonDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Person p = (Person) request.getAttribute("profile");
-    Person me = (Person) session.getAttribute("connectedPerson");
+    Person me =(new PersonDAO()).findByUsername((String)session.getAttribute("connectedPerson"));
 %>
 <html>
     <head>
+        <%@include file="HeadCSS.jsp"%>
         <title>Profil de <% out.print(p.getUsername()); %></title>
     </head>
     <body>
@@ -21,18 +23,35 @@
                         <div class="panel-body">
                             <p>Nombre d'abonnés : <span class="badge"><%= p.getFollowers().size() %></span></p>
                             <p>Nombre de messages publiés : <span class="badge"><%= p.getPublishedMessages().size() %></span></p>
-                            <form action="/abonnement" method="post" class="form-horizontal">
-                                <input type="hidden" name="idUtilisateur" value=""/>
+                            <form action="/profile?user=<%= p.getUsername() %>" method="post" class="form-horizontal">
+                                <input type="hidden" name="userToFollow" value="<%= p.getId() %>"/>
                                 <button type="submit" class="btn btn-primary pull-right">
-                                    <% if(me.isFollowing(p)){
-                                        out.print("Se désabonner");
-                                    }
-                                    else
-                                    {
-                                        out.print("S'abonner");
-                                    }%>
+                                    <%
+                                        if(me.isFollowing(p)){
+                                            out.print("Se désabonner");
+                                        }
+                                        else{
+                                            out.print("S'abonner");
+                                        }
+                                    %>
                                 </button>
                             </form>
+                            <%
+                                if ((Integer)p.getFollowers().size() != 0) {
+                            %>
+                            <h4>Abonnés</h4>
+                            <%
+                                }
+                            %>
+                            <div class="list-group">
+                                <%
+                                    for (Person following : p.getFollowers()) {
+                                %>
+                                <a href="/profile?user=<%= following.getUsername() %>" class="list-group-item"><%= following.getUsername() %></a>
+                                <%
+                                    }
+                                %>
+                            </div>
                         </div>
                     </div>
                 </div>

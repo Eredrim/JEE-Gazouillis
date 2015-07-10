@@ -26,6 +26,14 @@ public class ProfilServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("user") != null) {
+
+            HttpSession session = request.getSession();
+            Person connectedPerson = (new PersonDAO()).findByUsername((String)session.getAttribute("connectedPerson"));
+
+            if (connectedPerson.getUsername().equals((String) request.getParameter("user"))) {
+                response.sendRedirect("/myProfile");
+                return;
+            }
             PersonDAO pDao = new PersonDAO();
             Person p = pDao.findByUsername(request.getParameter("user"));
 
@@ -53,25 +61,22 @@ public class ProfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Person connectedPerson = (Person) session.getAttribute("connectedPerson");
+        Person connectedPerson = (new PersonDAO()).findByUsername((String) session.getAttribute("connectedPerson"));
         String idToFollow = request.getParameter("userToFollow");
         if (connectedPerson == null) {
-            response.sendRedirect("connexion");
+            response.sendRedirect("/connection");
         } else if (idToFollow != null) {
             PersonDAO pDao = new PersonDAO();
             Person personToFollow = pDao.findById(Integer.parseInt(idToFollow));
             
             if(connectedPerson.isFollowing(personToFollow)){
-                personToFollow.removeFollower(connectedPerson);
                 connectedPerson.removeFollow(personToFollow);
             }
             else{
                 connectedPerson.addFollow(personToFollow);
-                personToFollow.addFollower(connectedPerson);
             }
-            
+
             pDao.update(personToFollow);
-            pDao.update(connectedPerson);
 
             this.doGet(request, response);
         } else {

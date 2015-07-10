@@ -33,7 +33,7 @@ public class AccueilServlet extends Servlet {
 		List<Message> messageList = messageDAO.findAllPublished();
 		List<Message> messagesMonde = new ArrayList<>();
 		List<Message> messagesSuivi = new ArrayList<>();
-		Person personConnecte = (Person)req.getSession().getAttribute("connectedPerson");
+		Person personConnecte = (new PersonDAO()).findByUsername((String)req.getSession().getAttribute("connectedPerson"));
 
 		List<Person> follows = personConnecte.getFollows();
 		//on charge les messages dans les listes

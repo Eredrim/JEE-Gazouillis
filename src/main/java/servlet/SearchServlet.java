@@ -31,7 +31,7 @@ public class SearchServlet extends HttpServlet {
 		PersonDAO personDAO = new PersonDAO();
 
 		HttpSession session = req.getSession();
-		Person connectedPerson = (Person) session.getAttribute("connectedPerson");
+		Person connectedPerson = (new PersonDAO()).findByUsername((String)req.getSession().getAttribute("connectedPerson"));
 
 		String recherche = String.valueOf(req.getParameter("recherche"));
 		Keyword keyword = keywordDAO.findByWord(recherche);

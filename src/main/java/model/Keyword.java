@@ -60,4 +60,21 @@ public class Keyword {
     public void addMessage(Message tour) {
         this.messages.add(tour);
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+
+        if (object != null && object instanceof Keyword)
+        {
+            return (this.id == ((Keyword) object).getId());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
 }

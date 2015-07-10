@@ -36,7 +36,7 @@ public class Person {
     /**
      * Correspond aux personnes qui nous suivent
      */
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "FOLLOW",
             joinColumns = {@JoinColumn(name = "id_PERSON")},
@@ -46,7 +46,7 @@ public class Person {
     /**
      * Correspond aux personnes que l'on suit
      */
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> follows = new ArrayList<Person>();
 
@@ -198,10 +198,12 @@ public class Person {
 
     public void addFollow(Person follow) {
         this.follows.add(follow);
+        follow.addFollower(this);
     }
     
     public void removeFollow(Person follow){
         this.follows.remove(follow);
+        follow.removeFollower(this);
     }
 
     public List<Message> getMessagesShared() {
@@ -226,5 +228,17 @@ public class Person {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+
+        if (object != null && object instanceof Person)
+        {
+            return (this.id == ((Person) object).getId());
+        }
+
+        return false;
     }
 }
