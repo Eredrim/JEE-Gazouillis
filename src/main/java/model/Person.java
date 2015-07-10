@@ -172,8 +172,12 @@ public class Person {
         return this.followers.get(index);
     }
 
-    public void addFollowers(Person follower) {
+    public void addFollower(Person follower) {
         this.followers.add(follower);
+    }
+    
+    public void removeFollower(Person follower){
+        this.followers.remove(follower);
     }
 
     public List<Person> getFollows() {
@@ -187,9 +191,17 @@ public class Person {
     public Person getFollow(int index) {
         return this.follows.get(index);
     }
+    
+    public boolean isFollowing(Person personToFollow){
+        return this.follows.contains(personToFollow);
+    }
 
     public void addFollow(Person follow) {
         this.follows.add(follow);
+    }
+    
+    public void removeFollow(Person follow){
+        this.follows.remove(follow);
     }
 
     public List<Message> getMessagesShared() {

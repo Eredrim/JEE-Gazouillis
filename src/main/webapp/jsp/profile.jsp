@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Person p = (Person) request.getAttribute("profile");
+    Person me = (Person) session.getAttribute("connectedPerson");
 %>
 <html>
     <head>
@@ -15,9 +16,17 @@
             <div>Nombre de messages publiés : <% out.print(p.getPublishedMessages().size()); %></div>
         </div>
         <div>
-            <form action="/abonnement" method="post">
-                <input type="hidden" name="idUtilisateur" value=""/>
-                <button type="submit" class="btn btn-default">S'abonner / Se désabonner</button>
+            <form action="/profile" method="post">
+                <input type="hidden" name="userToFollow" value="<% out.print(p.getId()); %>"/>
+                <button type="submit" class="btn btn-default">
+                <% if(me.isFollowing(p)){
+                    out.print("Se désabonner");
+                }
+                else
+                {
+                    out.print("S'abonner");
+                }%>
+                </button>
             </form>
         </div>
         <div>
