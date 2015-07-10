@@ -6,7 +6,7 @@
 </head>
 <body style="background: url('bird.png')">
 <h1>Bienvenue sur Gazouillis</h1>
-<button type="submit" class="btn btn-default">Se connecter</button>
+<button type="submit" class="btn btn-default" onclick="document.location.href='/connection'">Se connecter</button>
 
 <h3>Veuillez vous connecter pour profiter de toutes nos super fonctionnalités</h3>
 </body>

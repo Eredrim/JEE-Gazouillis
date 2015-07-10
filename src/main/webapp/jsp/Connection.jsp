@@ -66,7 +66,7 @@
                         <input type="password" class="form-control" name="password" id="formConnectMdp"/>
                     </div>
 
-                    <button type="submit" class="btn btn-primary pull-right" name="connection">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary pull-right" name="connection">Connexion</button>
                 </form>
             </div>
         </div>
