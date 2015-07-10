@@ -1,7 +1,7 @@
 package main.java.servlet;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,7 +31,14 @@ public class RechercheServlet extends HttpServlet {
 
 		String recherche = String.valueOf(req.getParameter("recherche"));
 		Keyword keyword = keywordDAO.findByWord(recherche);
-		List<Message> messageList = keyword.getMessages();
+		List<Message> messageList;
+		if(keyword != null){
+			messageList = keyword.getMessages();
+		}
+		else{
+			messageList = new ArrayList<>();
+		}
+
 
 		Person person = personDAO.findByUsername(recherche);
 
