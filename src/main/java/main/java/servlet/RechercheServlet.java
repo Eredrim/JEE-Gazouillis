@@ -25,7 +25,7 @@ public class RechercheServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("GET /recherche");
+		System.out.println("GET /profile");
 		KeywordDAO keywordDAO = new KeywordDAO();
 		PersonDAO personDAO = new PersonDAO();
 

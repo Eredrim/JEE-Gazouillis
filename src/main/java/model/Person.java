@@ -1,5 +1,9 @@
 package main.java.model;
 
+import main.java.utils.HtmlEscape;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +13,7 @@ import java.util.List;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "first_name")
@@ -17,46 +21,52 @@ public class Person {
 
     private String name;
     private String mail;
+    private String city;
 
     @Column(unique = true)
     //TODO : ajouter un index sur le username en BDD
     private String username;
     private String password;
 
-    @OneToMany(mappedBy="person",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OrderBy("updatedAt DESC")
     private List<Message> messages = new ArrayList<Message>();
 
     /**
      * Correspond aux personnes qui nous suivent
      */
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="FOLLOW",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="id_PERSON")})
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "FOLLOW",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_PERSON")})
     private List<Person> followers = new ArrayList<Person>();
 
     /**
      * Correspond aux personnes que l'on suit
      */
-    @ManyToMany(mappedBy="followers")
+    @ManyToMany(mappedBy = "followers")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Person> follows = new ArrayList<Person>();
 
     /**
      * Liste des gazouillis des autres que l'on partage
      */
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="SHARE",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="id_MESSAGE")})
+    @JoinTable(name = "SHARE",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_MESSAGE")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Message> messagesShared = new ArrayList<Message>();
 
 
     public Person(String firstName, String name, String mail, String username, String password) {
-        this.firstName = firstName;
-        this.name = name;
-        this.mail = mail;
-        this.username = username;
-        this.password = password;
+        this.setFirstName(firstName);
+        this.setName(name);
+        this.setMail(mail);
+        this.setUsername(username);
+        this.setPassword(password);
     }
 
     public Person() {
@@ -83,7 +93,7 @@ public class Person {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = HtmlEscape.escapeHtml(name);
     }
 
     public String getMail() {
@@ -91,7 +101,7 @@ public class Person {
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+        this.mail = HtmlEscape.escapeHtml(mail);
     }
 
     public String getUsername() {
@@ -99,7 +109,7 @@ public class Person {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = HtmlEscape.escapeHtml(username);
     }
 
     public String getPassword() {
@@ -120,6 +130,30 @@ public class Person {
 
     public Message getMessage(int index) {
         return this.messages.get(index);
+    }
+
+    public List<Message> getPublishedMessages() {
+        List<Message> messages = new ArrayList<>();
+
+        for (Message message : this.messages) {
+            if (message.getIsPublished()) {
+                messages.add(message);
+            }
+        }
+
+        return messages;
+    }
+
+    public List<Message> getDraftMessages() {
+        List<Message> messages = new ArrayList<>();
+
+        for (Message message : this.messages) {
+            if (!message.getIsPublished()) {
+                messages.add(message);
+            }
+        }
+
+        return messages;
     }
 
     public void addMessage(Message message) {
@@ -172,5 +206,13 @@ public class Person {
 
     public void addMessageShared(Message messageShared) {
         this.messagesShared.add(messageShared);
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
