@@ -94,7 +94,7 @@ public class Message {
     public void setKeywords(List<Keyword> keywords) {
         this.keywords = keywords;
     }
-    
+
     public Keyword getKeyword(int index) {
         return this.keywords.get(index);
     }
@@ -102,7 +102,7 @@ public class Message {
     public void addKeyword(Keyword keyword) {
         this.keywords.add(keyword);
     }
-    
+
     public List<Person> getSharers() {
         return sharers;
     }

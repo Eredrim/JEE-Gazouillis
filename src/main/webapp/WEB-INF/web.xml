@@ -49,11 +49,11 @@
         <url-pattern>/profil</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>RechercheServlet</servlet-name>
-        <servlet-class>main.java.servlet.RechercheServlet</servlet-class>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>main.java.servlet.SearchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RechercheServlet</servlet-name>
-        <url-pattern>/recherche</url-pattern>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 </web-app>
