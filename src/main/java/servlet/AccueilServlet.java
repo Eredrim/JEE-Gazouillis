@@ -15,7 +15,7 @@ import main.java.dao.MessageDAO;
 import main.java.model.Message;
 import main.java.model.Person;
 
-public class AccueilServlet extends HttpServlet {
+public class AccueilServlet extends Servlet {
 
 	@Override
 	public void init() throws ServletException {
@@ -25,6 +25,7 @@ public class AccueilServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doGet(req, resp);
 		System.out.println("GET /accueil");
 		MessageDAO messageDAO = new MessageDAO();
 		PersonDAO personDAO = new PersonDAO();

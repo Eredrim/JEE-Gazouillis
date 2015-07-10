@@ -5,6 +5,7 @@ import main.java.dao.MessageDAO;
 import main.java.dao.PersonDAO;
 import main.java.model.Message;
 import main.java.model.Person;
+import main.java.utils.Encrypt;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +29,7 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
         /**
          * Forcing UTF-8 encoding for the parameters
          */
@@ -54,7 +56,7 @@ public class MyProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO: redirects when no user connected
+        super.doGet(req, resp);
         Person person = (Person) req.getSession().getAttribute("connectedPerson");
 
         List<Message> publishedMessages = person.getPublishedMessages();
@@ -107,16 +109,7 @@ public class MyProfileServlet extends HttpServlet {
         person.setMail(req.getParameter("mail"));
 
         if (req.getParameter("password") != null) {
-            String password = req.getParameter("password");
-
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-                password = new String(md.digest(password.getBytes()));
-
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            }
+            String password = Encrypt.encrypt(req.getParameter("password"));
             person.setPassword(password);
         }
 

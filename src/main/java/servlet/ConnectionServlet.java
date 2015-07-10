@@ -6,6 +6,7 @@
 package main.java.servlet;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.java.dao.PersonDAO;
 import main.java.model.Person;
+import main.java.utils.Encrypt;
 
 /**
  *
@@ -30,6 +32,8 @@ public class ConnectionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PersonDAO personDAO = new PersonDAO();
+
         System.out.println("GET /connexion");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Connection.jsp");
@@ -39,6 +43,8 @@ public class ConnectionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("POST /connexion");
+        request.setCharacterEncoding("UTF-8");
+
         boolean connected = false;
 
         if(request.getParameter("subscribe") != null) {
@@ -57,14 +63,7 @@ public class ConnectionServlet extends HttpServlet {
     }
 
     private boolean tryConnect(HttpServletRequest req) {
-        String password = req.getParameter("password");
-
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            password = new String(md.digest(password.getBytes()));
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
+        String password = Encrypt.encrypt(req.getParameter("password"));
 
         PersonDAO personDAO = new PersonDAO();
         Person person = personDAO.findByUsername(req.getParameter("username"));
@@ -77,14 +76,7 @@ public class ConnectionServlet extends HttpServlet {
     }
 
     private boolean trySubscribe(HttpServletRequest req) {
-        String password = req.getParameter("password");
-
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            password = new String(md.digest(password.getBytes()));
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
+        String password = Encrypt.encrypt(req.getParameter("password"));
 
         Person person = new Person();
         person.setUsername(req.getParameter("username"));
