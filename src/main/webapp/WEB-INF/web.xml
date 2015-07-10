@@ -41,12 +41,12 @@
         <url-pattern>/myProfile</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>profil</servlet-name>
-        <jsp-file>/jsp/profil.jsp</jsp-file>
+        <servlet-name>ProfilServlet</servlet-name>
+        <servlet-class>main.java.servlet.ProfilServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>profil</servlet-name>
-        <url-pattern>/profil</url-pattern>
+        <servlet-name>ProfilServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
